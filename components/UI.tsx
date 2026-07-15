@@ -22,6 +22,28 @@ export function ProjectGrid({ limit }: { limit?: number }) {
   return <div className="project-grid">{items.map((project) => <article className="project-card" key={project.slug}><div className={`project-visual ${project.tone}`}><span>{project.industry}</span><strong>{project.name}</strong><i /></div><div className="project-copy"><span className="demo-label">{project.label}</span><h3>{project.name}</h3><p>{project.summary}</p><div className="tag-row">{project.services.map((service) => <span key={service}>{service}</span>)}</div><button type="button" className="text-link" aria-label={`Preview details for ${project.name}`}>Project preview <span>↗</span></button></div></article>)}</div>;
 }
 
-export function PageHero({ eyebrow, title, copy, accent = "pink" }: { eyebrow: string; title: string; copy: string; accent?: "pink" | "orange" | "purple" | "cyan" }) {
-  return <section className={`page-hero page-hero-${accent}`}><div className="shell page-hero-grid"><div><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{copy}</p><Link className="button" href="/contact">Start a conversation <span>↗</span></Link></div><div className="page-orb" aria-hidden="true"><i/><b/><span/></div></div></section>;
+type Destination = "web" | "brand" | "social" | "work" | "about" | "contact";
+
+function DestinationGraphic({ destination }: { destination: Destination }) {
+  return <div className={`destination-scene destination-${destination}`} aria-hidden="true">
+    <span className="destination-stars star-one" />
+    <span className="destination-stars star-two" />
+    <span className="destination-stars star-three" />
+    <div className="destination-orbit orbit-outer" />
+    <div className="destination-orbit orbit-inner" />
+    <div className="destination-planet">
+      <i className="planet-detail detail-one" />
+      <i className="planet-detail detail-two" />
+      <i className="planet-detail detail-three" />
+      <b className="planet-symbol" />
+    </div>
+    <div className="destination-moon moon-one" />
+    <div className="destination-moon moon-two" />
+    <div className="destination-rocket"><i className="destination-window"/><i className="destination-flame"/></div>
+    <div className="destination-route" />
+  </div>;
+}
+
+export function PageHero({ eyebrow, title, copy, accent = "pink", visual = "web" }: { eyebrow: string; title: string; copy: string; accent?: "pink" | "orange" | "purple" | "cyan"; visual?: Destination }) {
+  return <section className={`page-hero page-hero-${accent}`}><div className="shell page-hero-grid"><div className="page-hero-copy"><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{copy}</p><Link className="button" href="/contact">Start a conversation <span>↗</span></Link></div><DestinationGraphic destination={visual}/></div></section>;
 }
