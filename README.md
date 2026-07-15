@@ -21,8 +21,8 @@ Quality commands:
 
 1. Push the repository to GitHub, GitLab or Bitbucket.
 2. In Vercel, choose **Add New Project** and import the repository.
-3. Keep the detected framework settings and add values from `.env.example` where required.
-4. Set `NEXT_PUBLIC_SITE_URL` to the final production domain.
+3. Keep **Next.js** as the detected framework and set the Build Command to `npm run build:vercel`.
+4. Add values from `.env.example` where required and set `NEXT_PUBLIC_SITE_URL` to the final production domain.
 5. Deploy, then connect the production domain and trigger one final redeploy so canonical and social metadata use it.
 
 ## Content and asset replacement
