@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">RocketJump temporary icon</title>
+  <desc id="desc">Temporary brand placeholder to replace when the final transparent logo asset is supplied.</desc>
+  <defs><linearGradient id="g" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#FF6A00"/><stop offset="1" stop-color="#FF2DA1"/></linearGradient></defs>
+  <rect width="64" height="64" rx="16" fill="#0D0D0D"/>
+  <path d="M23 40c3-14 12-23 27-27 1 15-7 25-21 29l-6-2Z" fill="url(#g)"/>
+  <circle cx="39" cy="25" r="5" fill="#0D0D0D" stroke="#F5F5F5" stroke-width="2"/>
+  <path d="M24 38 13 49l13-5 7-5-9-1Z" fill="#A9FF00"/>
+</svg>

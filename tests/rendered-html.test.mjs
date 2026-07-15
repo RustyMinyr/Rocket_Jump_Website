@@ -1,0 +1,44 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+
+async function render(path = "/") {
+  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
+  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${path}`);
+  const { default: worker } = await import(workerUrl.href);
+  return worker.fetch(new Request(`http://localhost${path}`, { headers: { accept: "text/html" } }), { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } }, { waitUntil() {}, passThroughOnException() {} });
+}
+
+test("server-renders the RocketJump home page", async () => {
+  const response = await render();
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Ideas That/);
+  assert.match(html, /Launch Brands/);
+  assert.match(html, /Websites That Move Businesses Forward/);
+  assert.match(html, /Let(?:&#x27;|')s Launch Your Brand/);
+  assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
+});
+
+test("renders every primary route", async () => {
+  const routes = ["/web-design", "/branding", "/social-media", "/work", "/about", "/contact", "/privacy", "/terms"];
+  for (const route of routes) {
+    const response = await render(route);
+    assert.equal(response.status, 200, route);
+    assert.match(response.headers.get("content-type") ?? "", /^text\/html/i, route);
+  }
+});
+
+test("all rendered internal links resolve", async () => {
+  const sourceRoutes = ["/", "/web-design", "/branding", "/social-media", "/work", "/about", "/contact", "/privacy", "/terms"];
+  const links = new Set();
+  for (const route of sourceRoutes) {
+    const html = await (await render(route)).text();
+    for (const match of html.matchAll(/<a[^>]*href="([^"#?]+)(?:[?#][^"]*)?"/g)) {
+      if (match[1].startsWith("/") && !match[1].startsWith("/_")) links.add(match[1]);
+    }
+  }
+  for (const href of links) {
+    const response = await render(href);
+    assert.equal(response.status, 200, href);
+  }
+});

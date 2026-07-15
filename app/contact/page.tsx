@@ -1,0 +1,6 @@
+import type { Metadata } from "next";
+import { QuoteForm } from "@/components/QuoteForm";
+import { PageHero } from "@/components/UI";
+import { pageMetadata, siteConfig } from "@/lib/site";
+export const metadata: Metadata = pageMetadata("Contact & Website Quote", "Tell RocketJump about your website, branding or social media project and request a tailored recommendation.", "/contact");
+export default function ContactPage(){return <><PageHero eyebrow="START A PROJECT" title="Ready to launch?" copy="Tell us about your business, what you need and where you would like to go next. We’ll recommend the right RocketJump solution." accent="pink"/><section className="section-light contact-section"><div className="shell contact-grid"><aside><span className="eyebrow">LET&apos;S TALK</span><h2>A clear first step.</h2><p>Share as much detail as you have. If you are not sure which package fits, that is exactly what we can help with.</p><div className="contact-card"><small>EMAIL</small><a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a><small>PHONE</small><a href={`tel:${siteConfig.phoneHref}`}>{siteConfig.phoneDisplay}</a><small>BASED IN</small><span>{siteConfig.location}</span></div><p className="placeholder-note">The displayed email and phone details are placeholders and must be confirmed before launch.</p></aside><QuoteForm/></div></section></>}
