@@ -1,19 +1,18 @@
 import Link from "next/link";
-import Image from "next/image";
 
 export function Logo({ dark = true }: { dark?: boolean }) {
   return (
-    <Link href="/" className={`logo supplied-logo ${dark ? "logo-dark" : "logo-light"}`} aria-label="RocketJump home">
-      {/* Exact supplied brand artwork, tightly cropped for reliable header and footer placement. */}
-      <Image
-        src="/brand/rocketjump-logo-header.png"
-        alt=""
-        width={960}
-        height={450}
-        priority
-        unoptimized
-        className="supplied-logo-image"
-      />
+    <Link href="/" className={`logo brand-lockup ${dark ? "logo-dark" : "logo-light"}`} aria-label="RocketJump home">
+      <span className="logo-wordmark" aria-hidden="true">
+        <span>r<span className="logo-pink">o</span>cket</span>
+        <span>jump<span className="logo-dot">.</span></span>
+      </span>
+      <span className="logo-rocket" aria-hidden="true">
+        <i className="logo-window" />
+        <i className="logo-fin logo-fin-left" />
+        <i className="logo-fin logo-fin-right" />
+        <i className="logo-flame" />
+      </span>
       <span className="sr-only">RocketJump</span>
     </Link>
   );
