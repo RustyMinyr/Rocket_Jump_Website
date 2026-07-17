@@ -4,7 +4,14 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 const revealSelector = [
-  "main > section:not(:first-child)",
+  "main > section:not(:first-child) > .shell > .section-heading",
+  ".intro-grid > *",
+  ".speciality-grid > *",
+  ".split-section > *",
+  ".heading-row",
+  ".cta-inner > *",
+  ".contact-grid > *",
+  ".promo-grid > article",
   ".service-card",
   ".project-card",
   ".package-card",
@@ -31,7 +38,12 @@ export function ScrollMotion() {
 
     if (reduceMotion) {
       nodes.forEach((node) => node.classList.add("is-visible"));
-      return;
+      return () => {
+        nodes.forEach((node) => {
+          node.classList.remove("reveal-ready", "is-visible");
+          node.style.removeProperty("--reveal-delay");
+        });
+      };
     }
 
     const observer = new IntersectionObserver(
@@ -66,6 +78,10 @@ export function ScrollMotion() {
       if (raf) window.cancelAnimationFrame(raf);
       root.classList.remove("has-scrolled");
       root.style.removeProperty("--hero-shift");
+      nodes.forEach((node) => {
+        node.classList.remove("reveal-ready", "is-visible");
+        node.style.removeProperty("--reveal-delay");
+      });
     };
   }, [pathname]);
 
