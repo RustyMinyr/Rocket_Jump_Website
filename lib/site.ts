@@ -8,8 +8,6 @@ export const siteConfig = {
   serviceArea: "Businesses across South Africa",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://rocketjump.co.za",
   email: "hello@rocketjump.co.za",
-  phoneDisplay: "+27 82 123 4567",
-  phoneHref: "+27821234567",
 } as const;
 
 export const navigation = [
@@ -126,7 +124,7 @@ export const projects = [
 export const websitePackages = [
   {
     name: "Launch Website",
-    price: "From R2,499",
+    price: "From R3,499",
     summary: "For startups, freelancers and small businesses that need a focused professional presence.",
     features: ["One custom-designed landing page", "Mobile-first responsive design", "Contact form and WhatsApp integration", "Google Maps and social links", "SSL security and basic SEO", "Performance optimisation", "Domain connection assistance", "Hosting available from R99/month"],
     cta: "Choose Launch",

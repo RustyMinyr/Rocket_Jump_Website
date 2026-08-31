@@ -33,9 +33,9 @@ Quality commands:
 - Replace placeholder social links in `lib/site.ts`.
 - Have `/privacy` and `/terms` reviewed by a qualified legal professional.
 
-## Contact form integration
+## Contact form delivery
 
-`components/QuoteForm.tsx` provides accessible client-side validation and a honeypot. It intentionally does not claim to send messages. Connect it to a protected server action or route handler and an email service using server-only environment variables. Add rate limiting and provider-side spam checks before enabling delivery.
+The contact form validates in the browser and submits to the server-side `/api/contact` route. Delivery uses Resend with server-only environment variables: `RESEND_API_KEY`, `EMAIL_FROM` and `CONTACT_TO_EMAIL`. Use a verified Rooiko sender identity, keep the API key out of source control, and set the submitter's email as the reply-to address.
 
 ## Future CMS
 
