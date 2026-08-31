@@ -7,8 +7,8 @@ export const siteConfig = {
   location: "Gqeberha, South Africa",
   serviceArea: "Businesses across South Africa",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://rocketjump.co.za",
-  email: "hello@rocketjump.co.za", // Placeholder - replace before commercial launch.
-  phoneDisplay: "+27 82 123 4567", // Placeholder - replace before commercial launch.
+  email: "hello@rocketjump.co.za",
+  phoneDisplay: "+27 82 123 4567",
   phoneHref: "+27821234567",
 } as const;
 
