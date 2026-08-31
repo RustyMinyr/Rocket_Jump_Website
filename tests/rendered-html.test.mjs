@@ -20,7 +20,7 @@ test("server-renders the RocketJump home page", async () => {
 });
 
 test("renders every primary route", async () => {
-  const routes = ["/web-design", "/branding", "/social-media", "/work", "/about", "/contact", "/privacy", "/terms"];
+  const routes = ["/web-design", "/branding", "/social-media", "/work", "/about", "/contact", "/client-portal", "/privacy", "/terms"];
   for (const route of routes) {
     const response = await render(route);
     assert.equal(response.status, 200, route);
@@ -28,8 +28,15 @@ test("renders every primary route", async () => {
   }
 });
 
+test("renders the client portal as a safe local preview", async () => {
+  const html = await (await render("/client-portal")).text();
+  assert.match(html, /CLIENT PORTAL PREVIEW/);
+  assert.match(html, /No passwords, client records or approval decisions are collected/);
+  assert.doesNotMatch(html, /type="password"/);
+});
+
 test("all rendered internal links resolve", async () => {
-  const sourceRoutes = ["/", "/web-design", "/branding", "/social-media", "/work", "/about", "/contact", "/privacy", "/terms"];
+  const sourceRoutes = ["/", "/web-design", "/branding", "/social-media", "/work", "/about", "/contact", "/client-portal", "/privacy", "/terms"];
   const links = new Set();
   for (const route of sourceRoutes) {
     const html = await (await render(route)).text();

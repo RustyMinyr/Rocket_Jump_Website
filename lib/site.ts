@@ -45,7 +45,7 @@ export const services = [
     number: "03",
     title: "Social Media",
     description:
-      "Branded content, scheduling and management that keeps your business active and relevant.",
+      "Strategy, planned content, scheduling and reporting that keeps your business active and recognisable.",
     href: "/social-media",
     link: "Grow Your Audience",
     tone: "purple",
@@ -60,6 +60,7 @@ export const webFeatures = [
   "Search-engine-friendly architecture",
   "Built using modern web technology",
   "Clear calls to action",
+  "Client portal access for progress, approvals and key information",
   "Local support from Gqeberha",
 ] as const;
 
@@ -72,12 +73,54 @@ export const processSteps = [
 ] as const;
 
 export const projects = [
-  { slug: "bayline-property", name: "Bayline Property", industry: "Property", summary: "A polished property showcase designed around architectural confidence.", services: ["Web design", "Brand direction"], label: "Demonstration project", tone: "ocean" },
-  { slug: "forge-fitness", name: "Forge Fitness", industry: "Fitness", summary: "A high-energy member journey for an ambitious training brand.", services: ["Web design", "Content system"], label: "Demonstration project", tone: "ember" },
-  { slug: "salt-and-stone", name: "Salt & Stone", industry: "Restaurant", summary: "An inviting digital menu and booking experience for a coastal eatery.", services: ["Web design", "Brand identity"], label: "Demonstration project", tone: "saffron" },
-  { slug: "wildcape-trails", name: "WildCape Trails", industry: "Tourism", summary: "Immersive trip planning for local adventures across the Eastern Cape.", services: ["Web design", "eCommerce"], label: "Demonstration project", tone: "forest" },
-  { slug: "northline-advisory", name: "Northline Advisory", industry: "Professional services", summary: "A clear, credible service platform for a modern advisory practice.", services: ["Web design", "Copy structure"], label: "Demonstration project", tone: "violet" },
-  { slug: "apex-build", name: "Apex Build Co.", industry: "Construction", summary: "A project-led website that makes capability and craft easy to trust.", services: ["Web design", "Lead generation"], label: "Demonstration project", tone: "steel" },
+  {
+    slug: "drone-division",
+    name: "Drone Division",
+    industry: "Aerial production",
+    summary: "A production-focused website for a Gqeberha aerial team serving film, television, live events and specialist commercial work. It pairs cinematic positioning with clear evidence of compliant, licensed operations.",
+    image: "/work/drone-division.png",
+    design: "A crisp white navigation bar and aerial location image give the homepage the authority of a production call sheet. Oversized white type keeps the offer cinematic and clear, while the imagery carries the sense of scale.",
+    challenges: ["Speak to film crews, event producers and industrial clients without diluting the offer.", "Balance showreel-led storytelling with confidence in safety, licensing and flight planning.", "Turn a complex, brief-led enquiry into a clear first conversation."],
+    services: ["Website strategy", "Service journeys", "Lead generation"],
+    label: "Client website",
+    url: "https://www.dronedivision.co.za/",
+  },
+  {
+    slug: "studio-gq",
+    name: "Studio GQ",
+    industry: "Studio hire & booking",
+    summary: "A purpose-built studio platform for film, photography, podcasts, greenscreen and content production in Gqeberha. The site showcases the space and production support while guiding visitors into a structured booking journey.",
+    image: "/work/studio-gq.png",
+    design: "A near-black, editorial layout lets the portrait-led photography carry the experience. Fine white navigation and a persistent outlined booking action bring focus and restraint to a visually rich studio offer.",
+    challenges: ["Make a flexible studio, equipment and support offering easy to understand at a glance.", "Collect date, session, extras and production requirements without making booking feel heavy.", "Keep visual proof, practical resources and booking calls to action working together."],
+    services: ["Booking journey", "Content architecture", "Conversion design"],
+    label: "Client website",
+    url: "https://www.studiogq.co.za/",
+  },
+  {
+    slug: "airko",
+    name: "AirKo",
+    industry: "UAS operations platform",
+    summary: "A commercial UAS operational-control platform that brings UASOC oversight, teams, pilots, aircraft, readiness records and audit evidence into one clearer workflow—while keeping the final release decision with a human UASOC.",
+    image: "/work/airko.png",
+    design: "A spacious white canvas, navy wordmark and aqua accents establish a clear, regulated product identity. Oversized headline type sits alongside a flight-pack interface panel, turning the promise of control into visible proof.",
+    challenges: ["Make distinct UASOC, team and pilot views legible without hiding the operational hierarchy.", "Explain dense readiness, review and authorisation workflows without creating a compliance-dashboard feel.", "Show automated decision support while preserving clear human regulatory authority."],
+    services: ["Product messaging", "Complex workflows", "Trust design"],
+    label: "Client website",
+    url: "https://www.airko.co.za/",
+  },
+  {
+    slug: "rooiko",
+    name: "RooiKO",
+    industry: "Media-safety workflow",
+    summary: "A film-production media-safety platform for CardFLOW software and the CacheCLEAR hardware appliance. The site explains a verified workflow that protects independent copies and only allows authorised card clearing after repeated checks.",
+    image: "/work/rooiko.png",
+    design: "Deep black, topographic texture and warm orange highlights create a technical, on-set atmosphere. Structured uppercase navigation and restrained hero copy make the specialist tools feel engineered and purposeful.",
+    challenges: ["Present hardware and software as one reliable on-set workflow rather than two separate products.", "Translate deep verification and evidence safeguards for crews working under real production pressure.", "Explain a fail-closed, irreversible media-clearance decision in straightforward language."],
+    services: ["Technical storytelling", "Workflow design", "Trust & clarity"],
+    label: "Client website",
+    url: "https://www.rooiko.com/",
+  },
 ] as const;
 
 export const websitePackages = [
@@ -96,6 +139,14 @@ export const websitePackages = [
     features: ["Up to five custom-designed pages", "Premium responsive layouts", "Contact and enquiry forms", "Galleries, maps and social integration", "SSL security and SEO setup", "Google Analytics setup", "Performance optimisation", "Hosting available from R99/month"],
     cta: "Choose Business",
     popular: true,
+  },
+  {
+    name: "eCommerce Website",
+    price: "From R14,999",
+    summary: "For businesses that need a polished, dependable online store they own—without a Shopify-style platform subscription.",
+    features: ["Your own custom eCommerce platform", "No Shopify or store-builder subscription", "Secure payment integration", "Shopping cart and streamlined checkout", "Shipping or collection options", "Order and stock management", "Discount codes and customer email", "Hosting available from R99/month"],
+    cta: "Choose eCommerce",
+    popular: false,
   },
   {
     name: "Custom Website",

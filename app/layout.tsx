@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { ScrollMotion } from "@/components/ScrollMotion";
+import { SiteChrome } from "@/components/SiteChrome";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
@@ -12,7 +10,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: { default: "RocketJump | Web Design Gqeberha", template: "%s | RocketJump" },
   description: siteConfig.description,
-  keywords: ["Web design Gqeberha", "Website design South Africa", "Brand identity Gqeberha", "Social media management Gqeberha"],
+  keywords: ["Web design Gqeberha", "Website design South Africa", "Brand identity Gqeberha", "Social media strategy Gqeberha"],
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
   openGraph: { title: "RocketJump — Ideas That Launch Brands", description: siteConfig.description, url: "/", siteName: siteConfig.name, locale: "en_ZA", type: "website", images: [{ url: "/og.png", width: 1728, height: 909, alt: "Ideas That Launch Brands — RocketJump" }] },
@@ -29,5 +27,5 @@ const structuredData = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className={poppins.variable}><a className="skip-link" href="#main">Skip to content</a><Header/><ScrollMotion/><main id="main">{children}</main><Footer/><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}/></body></html>;
+  return <html lang="en"><body className={poppins.variable}><a className="skip-link" href="#main">Skip to content</a><SiteChrome>{children}</SiteChrome><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}/></body></html>;
 }

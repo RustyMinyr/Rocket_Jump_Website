@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 
 type Errors = Record<string, string>;
 
-const services = ["Launch Website", "Business Website", "Custom Website", "eCommerce", "Brand Identity", "Social Media Management", "Website Hosting", "Website Maintenance", "Professional Email", "Other"];
+const services = ["Launch Website", "Business Website", "Custom Website", "eCommerce", "Brand Identity", "Social Media", "Website Hosting", "Website Maintenance", "Professional Email", "Other"];
 const budgets = ["Under R5,000", "R5,000–R10,000", "R10,000–R25,000", "R25,000–R50,000", "R50,000+", "Not sure yet"];
 
 export function QuoteForm() {
