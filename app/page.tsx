@@ -11,9 +11,9 @@ export default function Home() {
           <div className="hero-copy">
             <span className="eyebrow">CREATIVE WEB STUDIO · GQEBERHA</span>
             <h1>Ideas That<br />Launch Brands<span>.</span></h1>
-            <p>We design high-performance websites, create impactful brand identities and build social content that helps your business grow.</p>
+            <p>RocketJump is a Gqeberha web design studio helping small businesses across Gqeberha (Port Elizabeth) and the Eastern Cape build clear brands, fast websites and consistent social content.</p>
             <div className="button-row"><Link href="/contact" className="button">Let&apos;s Launch Your Brand <span>↗</span></Link><Link href="/work" className="button button-ghost">See Our Work <span>↗</span></Link></div>
-            <div className="location-note"><span>⌖</span><div><small>BASED IN GQEBERHA</small><p>Working with businesses across South Africa.</p></div></div>
+            <div className="location-note"><span>⌖</span><div><small>BASED IN GQEBERHA</small><p>Working with small businesses across Port Elizabeth and the Eastern Cape.</p></div></div>
           </div>
           <RocketGraphic />
         </div>

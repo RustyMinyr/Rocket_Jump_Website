@@ -3,9 +3,9 @@ export const siteConfig = {
   tagline: "Ideas That Launch Brands.",
   positioning: "Websites That Move Businesses Forward.",
   description:
-    "A creative web studio in Gqeberha building high-performance websites, brand identities and social media momentum.",
+    "RocketJump is a creative web studio in Gqeberha helping small businesses build high-performance websites, clear brand identities and consistent social content.",
   location: "Gqeberha, South Africa",
-  serviceArea: "Businesses across South Africa",
+  serviceArea: "Gqeberha (Port Elizabeth) and the Eastern Cape",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://rocketjump.co.za",
   email: "hello@rocketjump.co.za",
 } as const;
@@ -162,18 +162,12 @@ export const maintenancePackages = [
   { name: "Growth Care", price: "From R999/month", features: ["Everything in Business Care", "Two hours of website updates", "New sections and content uploads", "Analytics and SEO improvements", "Conversion recommendations"] },
 ] as const;
 
-export const socialLinks = [
-  { label: "Instagram", href: "#" },
-  { label: "Facebook", href: "#" },
-  { label: "LinkedIn", href: "#" },
-] as const;
-
 export function pageMetadata(title: string, description: string, path: string) {
   return {
     title,
     description,
     alternates: { canonical: path },
-    openGraph: { title, description, url: path, siteName: siteConfig.name, type: "website" as const, images: [{ url: "/og.png", width: 1728, height: 909, alt: "Ideas That Launch Brands — RocketJump" }] },
+    openGraph: { title, description, url: path, siteName: siteConfig.name, locale: "en_ZA", type: "website" as const, images: [{ url: "/og.png", width: 1728, height: 909, alt: "Ideas That Launch Brands — RocketJump" }] },
     twitter: { card: "summary_large_image" as const, title, description, images: ["/og.png"] },
   };
 }
