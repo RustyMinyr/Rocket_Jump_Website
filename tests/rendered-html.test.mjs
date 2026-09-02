@@ -45,6 +45,7 @@ test("renders local SEO metadata and crawl controls", async () => {
   assert.match(home, /Web Design, Branding &amp; Social Media in Gqeberha \| RocketJump/);
   assert.match(home, /Gqeberha \(Port Elizabeth\)/);
   assert.match(home, /"@type":"OfferCatalog"/);
+  assert.match(home, /name="google-site-verification" content="QyKzSoF4jDl858uV2iNWRS8as-7y0kHgtRU0esr5Wis"/);
   assert.match(webDesign, /Website Design in Gqeberha &amp; Port Elizabeth \| RocketJump/);
   assert.match(webDesign, /LOCAL WEBSITE QUESTIONS/);
   assert.match(portal, /name="robots" content="noindex,? ?nofollow"/);

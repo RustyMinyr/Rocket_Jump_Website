@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: { default: "Web Design, Branding & Social Media in Gqeberha | RocketJump", template: "%s | RocketJump" },
   description: siteConfig.description,
   keywords: ["Web design Gqeberha", "Website design Port Elizabeth", "Small business websites Gqeberha", "Brand identity Gqeberha", "Social media content Gqeberha"],
-  verification: process.env.NEXT_PUBLIC_SEARCH_CONSOLE_VERIFICATION ? { google: process.env.NEXT_PUBLIC_SEARCH_CONSOLE_VERIFICATION } : undefined,
+  verification: { google: process.env.NEXT_PUBLIC_SEARCH_CONSOLE_VERIFICATION || "QyKzSoF4jDl858uV2iNWRS8as-7y0kHgtRU0esr5Wis" },
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
   openGraph: { title: "Web Design, Branding & Social Media in Gqeberha | RocketJump", description: siteConfig.description, url: "/", siteName: siteConfig.name, locale: "en_ZA", type: "website", images: [{ url: "/og.png", width: 1728, height: 909, alt: "Ideas That Launch Brands — RocketJump" }] },
