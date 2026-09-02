@@ -48,8 +48,8 @@ test("renders local SEO metadata and crawl controls", async () => {
   assert.match(webDesign, /Website Design in Gqeberha &amp; Port Elizabeth \| RocketJump/);
   assert.match(webDesign, /LOCAL WEBSITE QUESTIONS/);
   assert.match(portal, /name="robots" content="noindex,? ?nofollow"/);
-  assert.match(robots, /Sitemap: https:\/\/rocketjump\.co\.za\/sitemap\.xml/);
-  assert.match(sitemap, /https:\/\/rocketjump\.co\.za\/web-design/);
+  assert.match(robots, /Sitemap: https:\/\/www\.rocketjump\.co\.za\/sitemap\.xml/);
+  assert.match(sitemap, /https:\/\/www\.rocketjump\.co\.za\/web-design/);
   assert.doesNotMatch(sitemap, /client-portal/);
 });
 

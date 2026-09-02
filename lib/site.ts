@@ -6,7 +6,7 @@ export const siteConfig = {
     "RocketJump is a creative web studio in Gqeberha helping small businesses build high-performance websites, clear brand identities and consistent social content.",
   location: "Gqeberha, South Africa",
   serviceArea: "Gqeberha (Port Elizabeth) and the Eastern Cape",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://rocketjump.co.za",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.rocketjump.co.za",
   email: "hello@rocketjump.co.za",
 } as const;
 
