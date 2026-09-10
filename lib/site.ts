@@ -58,7 +58,7 @@ export const webFeatures = [
   "Search-engine-friendly architecture",
   "Built using modern web technology",
   "Clear calls to action",
-  "Client portal access for progress, approvals and key information",
+  "Client portal preview for your overview, reports and key information",
   "Local support from Gqeberha",
 ] as const;
 
@@ -70,61 +70,213 @@ export const processSteps = [
   ["05", "Launch", "We test, connect your domain and launch it to the world."],
 ] as const;
 
+export type PortfolioImage = { src: string; label: string; alt: string };
+
 export const projects = [
   {
-    slug: "drone-division",
-    name: "Drone Division",
-    industry: "Aerial production",
-    summary: "A production-focused website for a Gqeberha aerial team serving film, television, live events and specialist commercial work. It pairs cinematic positioning with clear evidence of compliant, licensed operations.",
-    image: "/work/drone-division.png",
-    design: "A crisp white navigation bar and aerial location image give the homepage the authority of a production call sheet. Oversized white type keeps the offer cinematic and clear, while the imagery carries the sense of scale.",
-    challenges: ["Speak to film crews, event producers and industrial clients without diluting the offer.", "Balance showreel-led storytelling with confidence in safety, licensing and flight planning.", "Turn a complex, brief-led enquiry into a clear first conversation."],
-    services: ["Website strategy", "Service journeys", "Lead generation"],
-    label: "Client website",
-    url: "https://www.dronedivision.co.za/",
+    "slug": "ecfilm",
+    "name": "EC Film",
+    "industry": "Film resources & learning",
+    "summary": "An editorial-style hub for Eastern Cape film production, bringing crew, locations and practical learning together through clear navigation and warm, understated design.",
+    "url": "https://ecfilm.co.za/",
+    "status": "",
+    "linkLabel": "View website",
+    "images": [
+      {
+        "src": "/work/portfolio/ecfilm-home.webp",
+        "label": "Homepage",
+        "alt": "EC Film homepage with editorial typography and production resources"
+      },
+      {
+        "src": "/work/portfolio/ecfilm-courses.webp",
+        "label": "Online courses",
+        "alt": "EC Film online courses page"
+      },
+      {
+        "src": "/work/portfolio/ecfilm-locations.webp",
+        "label": "Film locations",
+        "alt": "EC Film Eastern Cape film locations page"
+      }
+    ]
   },
   {
-    slug: "studio-gq",
-    name: "Studio GQ",
-    industry: "Studio hire & booking",
-    summary: "A purpose-built studio platform for film, photography, podcasts, greenscreen and content production in Gqeberha. The site showcases the space and production support while guiding visitors into a structured booking journey.",
-    image: "/work/studio-gq.png",
-    design: "A near-black, editorial layout lets the portrait-led photography carry the experience. Fine white navigation and a persistent outlined booking action bring focus and restraint to a visually rich studio offer.",
-    challenges: ["Make a flexible studio, equipment and support offering easy to understand at a glance.", "Collect date, session, extras and production requirements without making booking feel heavy.", "Keep visual proof, practical resources and booking calls to action working together."],
-    services: ["Booking journey", "Content architecture", "Conversion design"],
-    label: "Client website",
-    url: "https://www.studiogq.co.za/",
+    "slug": "studio-gq",
+    "name": "Studio GQ",
+    "industry": "Studio hire & booking",
+    "summary": "Cinematic photography and a clean monochrome layout showcase the studio, with straightforward routes to explore services and book a session.",
+    "url": "https://studiogq.co.za/",
+    "status": "",
+    "linkLabel": "View website",
+    "images": [
+      {
+        "src": "/work/portfolio/studio-gq-home.webp",
+        "label": "Homepage mockup",
+        "alt": "Studio GQ website displayed on a studio monitor"
+      },
+      {
+        "src": "/work/portfolio/studio-gq-services.webp",
+        "label": "Services mockup",
+        "alt": "Studio GQ services website displayed on a laptop"
+      },
+      {
+        "src": "/work/portfolio/studio-gq-booking.webp",
+        "label": "Booking mockup",
+        "alt": "Studio GQ booking page displayed on a tablet"
+      }
+    ]
   },
   {
-    slug: "airko",
-    name: "AirKo",
-    industry: "UAS operations platform",
-    summary: "A commercial UAS operational-control platform that brings UASOC oversight, teams, pilots, aircraft, readiness records and audit evidence into one clearer workflow—while keeping the final release decision with a human UASOC.",
-    image: "/work/airko.png",
-    design: "A spacious white canvas, navy wordmark and aqua accents establish a clear, regulated product identity. Oversized headline type sits alongside a flight-pack interface panel, turning the promise of control into visible proof.",
-    challenges: ["Make distinct UASOC, team and pilot views legible without hiding the operational hierarchy.", "Explain dense readiness, review and authorisation workflows without creating a compliance-dashboard feel.", "Show automated decision support while preserving clear human regulatory authority."],
-    services: ["Product messaging", "Complex workflows", "Trust design"],
-    label: "Client website",
-    url: "https://www.airko.co.za/",
+    "slug": "rooiko",
+    "name": "RooiKo",
+    "industry": "Custom software & systems",
+    "summary": "Bold typography, dark surfaces and orange accents give this software and hardware studio a distinctive home for its services, systems and projects.",
+    "url": "https://rooiko.com/",
+    "status": "",
+    "linkLabel": "View website",
+    "images": [
+      {
+        "src": "/work/portfolio/rooiko-home.webp",
+        "label": "Homepage",
+        "alt": "RooiKo homepage with purpose-built systems headline"
+      },
+      {
+        "src": "/work/portfolio/rooiko-services.webp",
+        "label": "Services",
+        "alt": "RooiKo custom software and systems services page"
+      },
+      {
+        "src": "/work/portfolio/rooiko-hardware.webp",
+        "label": "Hardware",
+        "alt": "RooiKo hardware page"
+      }
+    ]
   },
   {
-    slug: "rooiko",
-    name: "RooiKO",
-    industry: "Media-safety workflow",
-    summary: "A film-production media-safety platform for CardFLOW software and the CacheCLEAR hardware appliance. The site explains a verified workflow that protects independent copies and only allows authorised card clearing after repeated checks.",
-    image: "/work/rooiko.png",
-    design: "Deep black, topographic texture and warm orange highlights create a technical, on-set atmosphere. Structured uppercase navigation and restrained hero copy make the specialist tools feel engineered and purposeful.",
-    challenges: ["Present hardware and software as one reliable on-set workflow rather than two separate products.", "Translate deep verification and evidence safeguards for crews working under real production pressure.", "Explain a fail-closed, irreversible media-clearance decision in straightforward language."],
-    services: ["Technical storytelling", "Workflow design", "Trust & clarity"],
-    label: "Client website",
-    url: "https://www.rooiko.com/",
+    "slug": "drone-division",
+    "name": "Drone Division",
+    "industry": "Aerial film & media",
+    "summary": "Large aerial imagery sets the scene, while crisp typography and focused service pages make specialist drone production easy to explore.",
+    "url": "https://dronedivision.co.za/",
+    "status": "",
+    "linkLabel": "View website",
+    "images": [
+      {
+        "src": "/work/portfolio/drone-division-home.webp",
+        "label": "Homepage",
+        "alt": "Drone Division homepage featuring an aerial coastline"
+      },
+      {
+        "src": "/work/portfolio/drone-division-studio.webp",
+        "label": "Laptop mockup",
+        "alt": "Drone Division homepage displayed on a laptop"
+      },
+      {
+        "src": "/work/portfolio/drone-division-technology.webp",
+        "label": "Technology",
+        "alt": "Drone Division technology page showcasing drone equipment"
+      }
+    ]
   },
+  {
+    "slug": "dasu",
+    "name": "Dasu",
+    "industry": "Creative collaboration platform",
+    "summary": "A focused dark interface for sharing work, managing teams and reviewing creative projects, with orange accents keeping actions and feedback easy to find.",
+    "url": "https://dasu.co.za/",
+    "status": "",
+    "linkLabel": "View website",
+    "images": [
+      {
+        "src": "/work/portfolio/dasu-home.webp",
+        "label": "Review showcase",
+        "alt": "Dasu video-review showcase with comments and playback controls"
+      },
+      {
+        "src": "/work/portfolio/dasu-review.webp",
+        "label": "Review workspace",
+        "alt": "Dasu client review folders"
+      },
+      {
+        "src": "/work/portfolio/dasu-send.webp",
+        "label": "File sharing",
+        "alt": "Dasu file-sharing interface"
+      },
+      {
+        "src": "/work/portfolio/dasu-team.webp",
+        "label": "Team workspace",
+        "alt": "Dasu team-management interface"
+      }
+    ]
+  },
+  {
+    "slug": "unopened",
+    "name": "Unopened",
+    "industry": "Collectibles & eCommerce",
+    "summary": "Neon colour, bold type and product-led layouts introduce a Pokémon collecting brand through a launch page built around sealed, single and graded cards.",
+    "url": "https://unopened.co.za/",
+    "status": "Launch preview",
+    "linkLabel": "View landing page",
+    "images": [
+      {
+        "src": "/work/portfolio/unopened-home.webp",
+        "label": "Launch page",
+        "alt": "Unopened launch page featuring Pokémon cards and neon headlines"
+      },
+      {
+        "src": "/work/portfolio/unopened-collection.webp",
+        "label": "The collection",
+        "alt": "Unopened page introducing sealed, single and graded cards"
+      }
+    ]
+  },
+  {
+    "slug": "airko",
+    "name": "AirKo",
+    "industry": "Drone operations platform",
+    "summary": "A clear navy-and-teal design makes a complex drone operations platform approachable, with structured pages for teams, pilots and operational oversight.",
+    "url": "https://airko.co.za/",
+    "status": "",
+    "linkLabel": "View website",
+    "images": [
+      {
+        "src": "/work/portfolio/airko-home.webp",
+        "label": "Homepage",
+        "alt": "AirKo operational-control homepage"
+      },
+      {
+        "src": "/work/portfolio/airko-platform.webp",
+        "label": "The platform",
+        "alt": "AirKo platform overview page"
+      },
+      {
+        "src": "/work/portfolio/airko-team.webp",
+        "label": "Team workflows",
+        "alt": "AirKo team operations page"
+      }
+    ]
+  },
+  {
+    "slug": "roland-gaspar",
+    "name": "Roland Gaspar",
+    "industry": "Host, MC & comedian",
+    "summary": "A playful, personality-led landing page with bold lettering and bright accents. A first look at Roland’s new online home.",
+    "url": "https://www.rolandgaspar.co.za/",
+    "status": "Website coming 18 September",
+    "linkLabel": "View landing page",
+    "images": [
+      {
+        "src": "/work/portfolio/roland-home.webp",
+        "label": "Landing page",
+        "alt": "Roland Gaspar landing page with Host, MC, Comedian branding"
+      }
+    ]
+  }
 ] as const;
 
 export const websitePackages = [
   {
     name: "Launch Website",
-    price: "From R3,499",
+    price: "From R4,999",
     summary: "For startups, freelancers and small businesses that need a focused professional presence.",
     features: ["One custom-designed landing page", "Mobile-first responsive design", "Contact form and WhatsApp integration", "Google Maps and social links", "SSL security and basic SEO", "Performance optimisation", "Domain connection assistance", "Hosting available from R99/month"],
     cta: "Choose Launch",
@@ -132,7 +284,7 @@ export const websitePackages = [
   },
   {
     name: "Business Website",
-    price: "From R8,499",
+    price: "From R9,499",
     summary: "For established businesses that need more space to communicate, build trust and generate enquiries.",
     features: ["Up to five custom-designed pages", "Premium responsive layouts", "Contact and enquiry forms", "Galleries, maps and social integration", "SSL security and SEO setup", "Google Analytics setup", "Performance optimisation", "Hosting available from R99/month"],
     cta: "Choose Business",
@@ -140,9 +292,9 @@ export const websitePackages = [
   },
   {
     name: "eCommerce Website",
-    price: "From R14,999",
+    price: "From R18,999",
     summary: "For businesses that need a polished, dependable online store they own—without a Shopify-style platform subscription.",
-    features: ["Your own custom eCommerce platform", "No Shopify or store-builder subscription", "Secure payment integration", "Shopping cart and streamlined checkout", "Shipping or collection options", "Order and stock management", "Discount codes and customer email", "Hosting available from R99/month"],
+    features: ["Your own custom eCommerce platform", "No Shopify or store-builder subscription", "Secure payment integration", "Shopping cart and streamlined checkout", "Shipping or collection options", "Order and stock management", "Discount codes and customer email", "eCommerce hosting R199/month"],
     cta: "Choose eCommerce",
     popular: false,
   },

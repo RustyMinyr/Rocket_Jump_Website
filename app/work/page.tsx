@@ -5,8 +5,8 @@ export const metadata: Metadata = pageMetadata("Website Design Portfolio", "Expl
 
 export default function WorkPage() {
   return <>
-    <PageHero eyebrow="SELECTED WORK" title="Websites that make an impact." copy="A selection of real websites shaped around the strategy, craft and business thinking each client needed—from Gqeberha teams to specialist platforms across South Africa." accent="cyan" visual="work"/>
-    <section className="section-light work-page"><div className="shell"><SectionHeading eyebrow="OUR WORK" title="Unique solutions for every site." copy="Each project begins with the real-world decisions its audience needs to make—from booking a Gqeberha production space to clearing sensitive media safely. Explore the live sites and the thinking behind each experience."/><ProjectGrid/></div></section>
+    <PageHero eyebrow="SELECTED WORK" title="Websites that make an impact." copy="Websites, platforms and new launches—each with its own purpose and personality." accent="cyan" visual="work"/>
+    <section className="section-light work-page"><div className="shell"><SectionHeading eyebrow="OUR WORK" title="Unique solutions for every site." copy="A closer look at eight projects, from local businesses to specialist platforms."/><ProjectGrid/></div></section>
     <CTASection title="Your business could be next."/>
   </>;
 }

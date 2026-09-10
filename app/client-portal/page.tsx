@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/site";
 export const metadata: Metadata = {
   ...pageMetadata(
     "Client Portal Preview",
-    "A RocketJump client workspace preview for website updates, design approvals and social-media reporting.",
+    "A RocketJump client workspace preview for a clear project overview and social-media reporting.",
     "/client-portal",
   ),
   robots: { index: false, follow: false },

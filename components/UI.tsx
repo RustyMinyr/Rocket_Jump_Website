@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { HeroArtwork } from "./HeroArtwork";
+import { ProjectGallery } from "./ProjectGallery";
 import { projects } from "@/lib/site";
 
 export function SectionHeading({ eyebrow, title, copy, align = "left" }: { eyebrow: string; title: string; copy?: string; align?: "left" | "center" }) {
@@ -13,14 +15,23 @@ export function FeatureList({ items, columns = 1 }: { items: readonly string[]; 
   return <ul className={`feature-list columns-${columns}`}>{items.map((item) => <li key={item}><span>✓</span>{item}</li>)}</ul>;
 }
 
-export function CTASection({ title = "Let’s build something incredible together.", copy = "Whether you are starting from scratch or ready to upgrade your online presence, RocketJump is ready to help you take the next step." }: { title?: string; copy?: string }) {
-  return <section className="cta-section"><div className="shell cta-inner"><div><span className="eyebrow light">READY FOR LIFT-OFF?</span><h2>{title}</h2><p>{copy}</p></div><Link href="/contact" className="button button-dark">Get a Website Quote <span>↗</span></Link></div></section>;
+export function CTASection({ title = "Let’s build something incredible together.", copy = "Whether you are starting from scratch or ready to upgrade your online presence, RocketJump is ready to help you take the next step.", ctaLabel = "Start your project" }: { title?: string; copy?: string; ctaLabel?: string }) {
+  return <section className="cta-section"><div className="shell cta-inner"><div><span className="eyebrow light">READY FOR LIFT-OFF?</span><h2>{title}</h2><p>{copy}</p></div><Link href="/contact" className="button button-dark">{ctaLabel} <span>↗</span></Link></div></section>;
 }
 
 export function ProjectGrid({ limit }: { limit?: number }) {
   const items = typeof limit === "number" ? projects.slice(0, limit) : projects;
   const isCompact = typeof limit === "number";
-  return <div className={`project-grid ${isCompact ? "project-grid-compact" : "project-grid-detailed"}`}>{items.map((project) => <article className="project-card" key={project.slug}><div className="project-visual"><img src={project.image} alt={`Homepage snapshot of ${project.name}`} loading="lazy" decoding="async" /></div><div className="project-copy"><span className="demo-label">{project.label}</span><h3>{project.name}</h3><p>{project.summary}</p><div className="tag-row">{project.services.map((service) => <span key={service}>{service}</span>)}</div>{!isCompact && <div className="project-design"><h4>Design elements</h4><p>{project.design}</p></div>}{!isCompact && <div className="project-challenge"><h4>The challenge</h4><ul>{project.challenges.map((challenge) => <li key={challenge}>{challenge}</li>)}</ul></div>}<a className="text-link project-link" href={project.url} target="_blank" rel="noreferrer" aria-label={`Visit ${project.name}`}>Visit live site <span>↗</span></a></div></article>)}</div>;
+  return <div className={`project-grid ${isCompact ? "project-grid-compact" : "project-grid-detailed"}`}>{items.map((project) => <article className="project-card" key={project.slug}>
+    <ProjectGallery name={project.name} images={project.images} compact={isCompact} />
+    <div className="project-copy">
+      <span className="demo-label">{project.industry}</span>
+      <h3>{project.name}</h3>
+      <p>{project.summary}</p>
+      {project.status && <p className="project-launch-note">{project.status}</p>}
+      <a className="text-link project-link" href={project.url} target="_blank" rel="noreferrer" aria-label={`${project.linkLabel}: ${project.name}`}>{project.linkLabel} <span>↗</span></a>
+    </div>
+  </article>)}</div>;
 }
 
 type Destination = "web" | "brand" | "social" | "work" | "about" | "contact";
@@ -45,6 +56,6 @@ function DestinationGraphic({ destination }: { destination: Destination }) {
   </div>;
 }
 
-export function PageHero({ eyebrow, title, copy, accent = "pink", visual = "web" }: { eyebrow: string; title: string; copy: string; accent?: "pink" | "orange" | "purple" | "cyan"; visual?: Destination }) {
-  return <section className={`page-hero page-hero-${accent}`}><div className="shell page-hero-grid"><div className="page-hero-copy"><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{copy}</p><Link className="button" href="/contact">Start a conversation <span>↗</span></Link></div><DestinationGraphic destination={visual}/></div></section>;
+export function PageHero({ eyebrow, title, copy, accent = "pink", visual = "web", overlay, ctaHref = "/contact" }: { eyebrow: string; title: string; copy: string; accent?: "pink" | "orange" | "purple" | "cyan"; visual?: Destination; overlay?: import("react").ReactNode; ctaHref?: string }) {
+  return <section className={`page-hero page-hero-${accent}`}><div className="shell page-hero-grid"><div className="page-hero-copy"><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{copy}</p><Link className="button" href={ctaHref}>Start a conversation <span>↗</span></Link></div><HeroArtwork overlay={overlay}><DestinationGraphic destination={visual}/></HeroArtwork></div></section>;
 }

@@ -43,17 +43,6 @@ function isEmail(value: string) {
   return /^\S+@\S+\.\S+$/.test(value);
 }
 
-function isWebsite(value: string) {
-  if (!value) return true;
-
-  try {
-    const url = new URL(value);
-    return url.protocol === "https:" || url.protocol === "http:";
-  } catch {
-    return false;
-  }
-}
-
 function escapeHtml(value: string) {
   return value.replace(/[&<>'"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", "\"": "&quot;" })[character] ?? character);
 }
@@ -74,7 +63,9 @@ export async function POST(request: Request) {
 
   let payload: unknown;
   try {
-    payload = await request.json();
+    const raw = await request.text();
+    if (new TextEncoder().encode(raw).length > MAX_BODY_BYTES) return json({ ok: false, message: "Your enquiry is too long." }, 413);
+    payload = JSON.parse(raw);
   } catch {
     return json({ ok: false, message: "Invalid request." }, 400);
   }
@@ -94,7 +85,7 @@ export async function POST(request: Request) {
   const budget = readRequiredText(payload.budget, 80);
   const description = readRequiredText(payload.description, 5_000);
 
-  if (!fullName || businessName === null || !phone || !email || currentSite === null || !service || !budget || !description || !isEmail(email) || !isWebsite(currentSite) || !services.has(service) || !budgets.has(budget)) {
+  if (!fullName || businessName === null || !phone || !email || currentSite === null || !service || !budget || !description || !isEmail(email) || !services.has(service) || !budgets.has(budget)) {
     return json({ ok: false, message: "Please check the required fields and try again." }, 400);
   }
 
@@ -121,6 +112,7 @@ export async function POST(request: Request) {
   try {
     const resendResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
+      signal: AbortSignal.timeout(15000),
       headers: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
@@ -128,7 +120,7 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         from: process.env.EMAIL_FROM || "Rooiko <contact@rooiko.com>",
-        to: [process.env.CONTACT_TO_EMAIL || "contact@rooiko.com"],
+        to: [process.env.CONTACT_TO_EMAIL || "hello@rocketjump.co.za"],
         reply_to: email,
         subject: `New RocketJump enquiry — ${subjectValue(fullName)}`,
         text,

@@ -27,7 +27,7 @@ const structuredData = {
       "@id": `${siteConfig.url}/#organization`,
       name: siteConfig.name,
       url: siteConfig.url,
-      logo: `${siteConfig.url}/brand/rocketjump-logo-header.png`,
+      logo: `${siteConfig.url}/brand/rocketjump-primary-positive.png`,
       email: siteConfig.email,
       slogan: siteConfig.tagline,
       description: siteConfig.description,

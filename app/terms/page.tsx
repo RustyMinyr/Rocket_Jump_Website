@@ -1,4 +1,21 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { pageMetadata } from "@/lib/site";
+
 export const metadata: Metadata = pageMetadata("Terms & Conditions", "RocketJump terms and conditions.", "/terms");
-export default function TermsPage(){return <section className="legal-page"><div className="shell legal-copy"><span className="eyebrow">LEGAL</span><h1>Terms & Conditions</h1><h2>Website information</h2><p>Information on this website is provided for general guidance. Service descriptions, pricing and availability may change and are confirmed in a written proposal.</p><h2>Project scope and payment</h2><p>Each project must be governed by an agreed scope, timeline, payment schedule and client responsibilities. Work outside the agreed scope may require a separate quotation.</p><h2>Client materials</h2><p>Clients are responsible for supplying lawful, accurate content and confirming that they hold the necessary rights to materials provided for use.</p><h2>Intellectual property</h2><p>Ownership, licensing and transfer of project materials must be defined in the relevant client agreement. Third-party tools and assets may remain subject to their own licences.</p><h2>Hosting and maintenance</h2><p>Hosting keeps a website available online. Maintenance is a separate support service. Usage limits, response times and included work are governed by the chosen plan and agreement.</p><h2>Limitation</h2><p>Any warranties, limitations of liability and dispute procedures are set out in the relevant client agreement.</p></div></section>}
+
+export default function TermsPage() {
+  return <section className="legal-page"><div className="shell legal-copy">
+    <span className="eyebrow">THE BASICS</span>
+    <h1>Terms &amp; Conditions</h1>
+    <h2 id="giveaway">Find Roland website giveaway</h2>
+    <p>You must be a resident of Gqeberha (Port Elizabeth) to enter.</p>
+    <p>Find Roland on our About page and submit your name, email and dream website idea.</p>
+    <p>The prize is one <Link href="/web-design">Launch Website package</Link> plus six months’ hosting.</p>
+    <p>Entries close at the end of 29 September 2026, South African time. The winner will be chosen by lucky draw and announced on 30 September 2026.</p>
+    <h2>Working with RocketJump</h2>
+    <p>We agree on the work, price, payment and timing with you before starting. Extra work is quoted separately. You must have permission to use any content you supply.</p>
+    <p>Hosting and maintenance are separate services, as set out in your quote.</p>
+    <p>Questions? Email <a href="mailto:hello@rocketjump.co.za">hello@rocketjump.co.za</a>.</p>
+  </div></section>;
+}
