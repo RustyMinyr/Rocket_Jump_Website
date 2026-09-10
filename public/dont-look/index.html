@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b0819"><meta name="robots" content="noindex"><meta name="description" content="One head. Eight impossible places. A strange little journey through space and time."><title>Roland, Don’t Look. | RocketJump</title><link rel="icon" href="../favicon.svg"><link rel="stylesheet" href="style.css"></head>
+<body><main id="universe">
+<canvas id="space" tabindex="0" aria-label="Journey through space and time. Move your mouse or touch the scene to direct Roland’s eyes. Arrow keys move his gaze. Look at creatures and items to interact. Keys 1, 2 and 3 use unlocked powers. Escape pauses."></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<header><a href="/" class="brand" aria-label="Back to RocketJump">ROCKETJUMP <span>/ A SMALL DETOUR</span></a><nav aria-label="Game controls"><button id="map-button" title="Your journey">Journey <span>✧</span></button><button id="sound" aria-pressed="false" title="Toggle sound">Sound off</button><button id="pause" aria-label="Pause game">Ⅱ</button></nav></header>
+<section class="hud" id="hud" hidden><div class="world"><p id="era"></p><h1 id="world-name"></h1><p id="objective"></p></div><div class="vitals"><div class="health-label"><span>STILL MOSTLY ROLAND</span><span id="health-text">100%</span></div><div class="health-track" role="meter" aria-label="Roland’s health" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" id="health-meter"><i id="health-fill"></i></div><p id="score">0 stardust</p></div></section>
+<div id="boss-hint" hidden></div><div id="toast" role="status" aria-live="polite"></div>
+<div id="speech" aria-live="polite"><span>ROLAND</span><p id="speech-text">“A quick trip. What could possibly happen?”</p></div>
+<aside class="powers" id="powers" hidden aria-label="Superpowers"></aside>
+<div id="panel" class="panel"><div class="panel-card intro"><p class="eyebrow">A JOURNEY THROUGH SPACE, TIME & BAD DECISIONS</p><h2>ROLAND,<br><em>DON’T LOOK.</em></h2><p class="lead">Space acts differently when you watch it.<br>Unfortunately, space is watching you too.</p><button id="begin" class="pink" disabled>Getting the universe ready…</button><p class="help">Move your mouse or finger. His eyes follow.<br>No camera. Just your very questionable judgement.</p><button id="intro-map" class="text-button" hidden>Your journey so far →</button><p id="load-error" hidden></p></div></div>
+<dialog id="journey-map"><div class="map-header"><div><p class="eyebrow">EIGHT PLACES. ONE EXTREMELY LOST HEAD.</p><h2>Your improbable journey.</h2></div><button id="close-map" aria-label="Close journey map">×</button></div><div id="world-list"></div><p class="map-note">Progress is saved on this device. Replay any discovered world.</p></dialog>
+<div class="loading" id="loading" hidden>Reassembling time…</div>
+<footer><span id="chapter">AN UNREASONABLY SMALL ADVENTURE</span><span id="controls-hint">Move to look <b>·</b> 1 / 2 / 3 powers <b>·</b> Esc pause</span></footer>
+<noscript>This journey needs JavaScript to play.</noscript>
+</main><script type="module" src="game.js"></script></body></html>
