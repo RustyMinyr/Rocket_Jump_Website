@@ -15,7 +15,7 @@ export function Footer() {
         <div><h3>Navigate</h3>{navigation.map((item) => <Link key={item.href} href={item.href}>{item.label}</Link>)}</div>
         <div><h3>Visit</h3><p>{siteConfig.location}</p><p>{siteConfig.serviceArea}</p><a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></div>
       </div>
-      <div className="shell footer-bottom"><span>© {new Date().getFullYear()} RocketJump. All rights reserved.</span><span><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><a className={styles.egg} href="/dont-look/index.html" aria-label="Play Roland, Don’t Look" title="A small, improbable adventure"><span aria-hidden="true">✧</span></a></span></div>
+      <div className="shell footer-bottom"><span>© {new Date().getFullYear()} RocketJump. All rights reserved.</span><span><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><a className={styles.egg} href="/drifter/" aria-label="Play Drifter" title="Lost in space. Still moving."><span aria-hidden="true">✧</span></a></span></div>
     </footer>
   );
 }

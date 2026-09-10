@@ -13,7 +13,9 @@
     "start:vercel": "next start",
     "test": "node --test tests/rendered-html.test.mjs",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next"
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
+    "dev:game": "node scripts/serve-roland-game.mjs",
+    "test:game": "node --test --test-isolation=none tests/drifter-expedition.test.mjs tests/roland-accounts.test.mjs"
   },
   "dependencies": {
     "next": "16.2.6",
