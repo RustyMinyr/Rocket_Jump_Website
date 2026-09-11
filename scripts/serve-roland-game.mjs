@@ -4,7 +4,7 @@ import {resolve,extname,sep} from 'node:path';
 import {Readable} from 'node:stream';
 import {createGameService} from '../lib/roland-account.mjs';
 const root=resolve('public'),port=Number(process.env.ROLAND_PORT||4175),origin=`http://127.0.0.1:${port}`;
-const service=await createGameService({databasePath:resolve(process.env.ROLAND_DATABASE_PATH||'.data/roland-game.sqlite'),origin,local:true});
+const service=await createGameService({databasePath:resolve(process.env.ROLAND_DATABASE_PATH||'.data/roland-game.sqlite'),databaseUrl:process.env.DATABASE_URL,origin,local:true});
 const types={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.png':'image/png','.webp':'image/webp','.svg':'image/svg+xml','.ico':'image/x-icon'};
 const server=createServer(async(req,res)=>{try{
  if(req.headers.host!==`127.0.0.1:${port}`){res.writeHead(403).end('Use the local preview address.');return;}

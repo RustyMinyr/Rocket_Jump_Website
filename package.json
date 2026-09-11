@@ -18,6 +18,7 @@
     "test:game": "node --test --test-isolation=none tests/drifter-expedition.test.mjs tests/roland-accounts.test.mjs"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "next": "16.2.6",
     "react": "19.2.6",
     "react-dom": "19.2.6"

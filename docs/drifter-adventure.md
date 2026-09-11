@@ -18,12 +18,14 @@ Version-two saves and the legacy storage key are retained. New bounded `stage`, 
 
 The local preview uses persistent SQLite and email/password sign-in. Session cookies are HttpOnly, mutations require the configured origin, password hashes use scrypt, and account writes enforce session identity and optimistic revisions. Local browser backup happens immediately; network uploads coalesce to at most once per four seconds during ordinary play. Requests are capped at 128 KB. No recovery or verification email is sent.
 
-Production account storage must be connected to a durable database before sign-up is offered. The current local SQLite path is deliberately refused on Vercel. Do not label local or unavailable saves as cloud saves.
+Production account storage uses Neon Postgres through the project's `DATABASE_URL`. SQLite remains limited to local previews and explicitly configured persistent hosts. Cloud tables use a `drifter_` prefix. Account creation uses a transaction, rate limits increment atomically, and saving uses an atomic revision compare-and-swap so simultaneous browser sessions cannot overwrite each other's discoveries. No database credentials are delivered to the browser. Initialization is retried after a connection failure.
 
 ## Validation
 
 `node --test --test-isolation=none tests/drifter-expedition.test.mjs tests/roland-accounts.test.mjs` covers the full 35-world campaign in the actual physics engine, reachable gear and parts, timed barriers, checkpoint migration/merges, no-heal equipment swaps, mobile targets, descent, tiny caches, account isolation and autosave throttling.
 
-`scripts/check-drifter-journey.cjs` plays nine representative five-stage worlds using real browser clicks and keyboard input, with no writes to game state. It checks rare equipment, all six ship parts, the home ending and save restoration. `scripts/check-drifter.cjs` checks desktop and phone presentation and tap controls. `scripts/check-drifter-account.cjs` uses an isolated local server and synthetic addresses; it sends no emails.
+`scripts/check-drifter-journey.cjs` plays nine representative five-stage worlds using real browser clicks and keyboard input, with no writes to game state. It checks rare equipment, all six ship parts, the home ending and save restoration. `scripts/check-drifter.cjs` checks desktop and phone presentation and tap controls. `scripts/check-drifter-account.cjs` uses synthetic addresses and checks signup, explicit guest import, account isolation, cross-browser login, reload and logout. `DRIFTER_TEST_ORIGIN` selects a test origin; when `DATABASE_URL` is supplied, its temporary accounts are removed afterward. No emails are sent.
+
+`tests/drifter-cloud.test.mjs` runs against Neon when `DATABASE_URL` is supplied and otherwise skips. It checks concurrent registration, atomic save conflicts, merge retries, session revocation and persistence across independent service instances, then removes its own test account.
 
 Art sources, prompts, transparency checks and crop manifests are retained locally in `output/drifter-art` and `output/drifter-worlds`. Runtime art is compressed in `public/roland-home/assets`. The twelve new planet cards intentionally have dark opaque backgrounds; suits and gameplay sprites have verified alpha.
