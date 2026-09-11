@@ -3,6 +3,12 @@ import {muzzle} from './combat.js';
 // The corrected suit artwork faces right. Flip the whole character around its feet.
 export function drawSuit(ctx,images,suit,x,y,height,tilt=0,facing=1){const image=images['suit-'+suit];if(!image)return;const width=height*image.width/image.height;ctx.save();ctx.translate(x,y);ctx.rotate(tilt);ctx.scale(facing<0?-1:1,1);ctx.drawImage(image,-width/2,-height,width,height);ctx.restore();}
 
+// Both vehicle source images have their cockpit/nose on the left.
+export function drawVehicle(ctx,images,kind,x,y,facing=1,height=100){
+ const image=images[kind==='ship'?'drifter-ship':'drifter-rover'];if(!image)return;
+ ctx.save();ctx.translate(x,y);ctx.scale(facing>0?-1:1,1);ctx.drawImage(image,-85,-height/2,170,height);ctx.restore();
+}
+
 export function drawCompanion(ctx,engine,images,time){
  const d=engine.companion;if(!d)return;
  const target=engine.aimTarget;

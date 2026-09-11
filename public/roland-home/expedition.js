@@ -1,5 +1,6 @@
 import {stageNames,savedStage} from './data.js';
 import {gravitySurface} from './gravity.js';
+import {drawVehicle} from './character.js';
 
 export function buildExpedition(e){
  const p=e.planet,y=e.floor,span=e.length/5;
@@ -11,19 +12,20 @@ export function buildExpedition(e){
   platform(start-40,540);
   for(let i=0;i<11;i++){
    const x=start+460+i*stride,top=y-[0,30,55,15,65,0,40,20,70,35,0][(i+p.seed+stage*2)%11];
-   const fieldZone=x>start+span*.31&&x<start+span*.53;
-   platform(x,stride-(fieldZone||p.vehicle==='rover'?0:35+(i%3)*9),fieldZone||p.vehicle==='rover'?y:top,{moving:!fieldZone&&p.vehicle!=='rover'&&p.moving&&i%4===2,phase:i+stage,spring:!fieldZone&&['forest','mushroom','jelly'].includes(p.biome)&&i%4===0});
+   const fieldZone=x>start+span*.31&&x<start+span*.53,flat=p.stableGravity||p.vehicle==='rover';
+   platform(x,stride-(fieldZone||flat?0:35+(i%3)*9),fieldZone||flat?y:top,{moving:!fieldZone&&!flat&&p.moving&&i%4===2,phase:i+stage,spring:!fieldZone&&['forest','mushroom','jelly'].includes(p.biome)&&i%4===0});
    if(!fieldZone&&(i+stage+p.seed)%4===2)platform(x+12,120,top-105,{floating:true});
   }
   platform(start+span-230,280);
   // Every field has continuous ground; a gravity lock cannot strand the player in a gap.
-  const fx=start+span*.34;platform(fx-60,span*.2+120);e.fields.push({x:fx,w:span*.17,stage});
+  const fx=start+span*.34;platform(fx-60,span*.2+120);if(p.biome!=='water')e.fields.push({x:fx,w:span*.17,stage});
   const gx=start+span*.59;platform(gx-160,350);e.gates.push({x:gx,w:34,stage,period:6.8+(p.seed%3)*.4,offset:stage*1.7+p.seed*.31,open:false,remaining:0,warning:false});
   for(let i=0;i<8;i++)pickup(['juice','grow','cookie','shrink','bouncy','juice','cookie','juice'][i],start+240+i*(span-650)/8,'supply-'+stage+'-'+i);
   for(let i=0;i<6;i++)pickup('shard',start+380+i*(span-650)/6,'shard-'+(stage*6+i),{got:e.profile.claims.includes('shard:'+e.id+':'+(stage*6+i))});
   const cx=start+span*.76;pickup('cache',cx,'cache-'+stage,{got:e.profile.claims.includes('cache:'+e.id+':'+stage),requires:p.cavern&&stage%2===1?'shrink':null});
   if(p.cavern&&stage%2===1)pickup('shrink',cx-100,'tunnel-potion-'+stage);
   if(stage===1||stage===3){const x=start+span*.66;platform(x-110,230);e.vents.push({x,w:70,stage,period:5.6,offset:p.seed*.2+stage,phase:'idle',remaining:0});}
+  if([0,2].includes(stage)&&!p.stableGravity&&p.biome!=='water'&&!p.flight&&!p.vehicle){const rx=start+span*.7;platform(rx-100,320);pickup('repair',rx,'repair-'+stage,{y:y-65});}
   if(stage<3)pickup('signal',start+span*.86,'signal-'+stage,{got:e.profile.claims.includes('signal:'+e.id+':'+stage)});
   for(let i=0;i<5;i++){
    const x=start+750+i*(span-1200)/5,baseY=(e.platformAt(x)?.baseY??y)-(p.enemy==='dragon'?130:24),hp=p.enemy==='dragon'?55:p.enemy==='pirate'?38:22;
@@ -55,7 +57,16 @@ export function expeditionStep(e,dt){
  e.dashCooldown=Math.max(0,e.dashCooldown-dt);
 }
 
-export function movementMode(e){if(e.vehicle?.mounted)return e.vehicle.kind;if(e.activeField)return'walk';if(e.planet.biome==='water')return'swim';if(e.planet.flight||e.stats.relic==='jet')return'fly';if(e.stats.relic==='anchor')return'walk';return'bounce';}
+export function movementMode(e){if(e.vehicle?.mounted)return e.vehicle.kind;if(e.planet.biome==='water')return'swim';if(e.activeField)return'walk';if(e.planet.flight||e.stats.relic==='jet')return'fly';if(e.planet.stableGravity||e.effects.repair>0||e.stats.relic==='anchor')return'walk';return'bounce';}
+
+export function drawGravityRepair(c,x,y,time){
+ c.save();c.translate(x,y);c.shadowColor='#88ffe0';c.shadowBlur=14;
+ c.strokeStyle='#98ffe6';c.lineWidth=3;
+ c.save();c.rotate(Math.sin(time*1.5)*.22);c.beginPath();c.ellipse(0,0,23,12,-.5,0,Math.PI*2);c.stroke();c.restore();
+ c.fillStyle='#133e43';c.fillRect(-9,-17,18,34);c.strokeRect(-9,-17,18,34);
+ c.fillStyle='#dcfff3';c.fillRect(-3,-9,6,18);c.fillRect(-7,-3,14,6);
+ c.shadowBlur=0;c.font='bold 9px monospace';c.textAlign='center';c.fillStyle='#c8ffed';c.fillText('GRAVITY PATCH · 5s',0,-31);c.restore();
+}
 
 export function drawExpedition(c,e,images,time){
  const f=e.floor,cam=e.camera,visible=x=>x>cam-250&&x<cam+e.width+250;
@@ -64,6 +75,6 @@ export function drawExpedition(c,e,images,time){
  for(const v of e.vents){if(!visible(v.x))continue;c.fillStyle=v.phase==='active'?'#fb7bab99':v.phase==='warning'?'#ffe1a04d':'#abccdf22';c.fillRect(v.x-v.w/2,f-9,v.w,9);if(v.phase!=='idle'){c.fillStyle=v.phase==='active'?'#ff83b477':'#ffe2a21a';c.fillRect(v.x-v.w/2,f-250,v.w,250);c.textAlign='center';c.font='11px monospace';c.fillStyle='#ffe3d8';c.fillText(v.phase==='warning'?'VENT · '+v.remaining.toFixed(1)+'s':'KEEP CLEAR',v.x,f-270);}}
  for(let i=1;i<5;i++){const x=i*e.stageLength+40;if(!visible(x))continue;c.strokeStyle='#fdb4df';c.lineWidth=3;c.beginPath();c.ellipse(x,f-72,31,70,0,Math.PI,Math.PI*2);c.stroke();c.font='12px monospace';c.fillStyle='#fce5f4';c.textAlign='left';c.fillText('0'+(i+1)+' / '+e.stages[i].toUpperCase(),x-25,f-165);}
  if(e.planet.cavern){c.fillStyle='#100d1de8';c.beginPath();c.moveTo(cam,0);c.lineTo(cam+e.width,0);for(let x=cam+e.width;x>=cam;x-=38)c.lineTo(x,90+Math.sin(x*.012)*25+(Math.floor(x/38)%3)*18);c.closePath();c.fill();}
- if(e.vehicle&&!e.vehicle.mounted&&visible(e.vehicle.x)){const v=e.vehicle,img=images[v.kind==='ship'?'drifter-ship':'drifter-rover'];if(img)c.drawImage(img,v.x-85,v.y-75,170,110);c.fillStyle='#eaf7f6';c.textAlign='center';c.font='12px monospace';c.fillText(v.kind==='ship'?'ABANDONED SHIP':'ABANDONED LUNAR LANDER',v.x,v.y-96);}
+ if(e.vehicle&&!e.vehicle.mounted&&visible(e.vehicle.x)){const v=e.vehicle;drawVehicle(c,images,v.kind,v.x,v.y-20,v.facing??1,110);c.fillStyle='#eaf7f6';c.textAlign='center';c.font='12px monospace';c.fillText(v.kind==='ship'?'ABANDONED SHIP':'ABANDONED LUNAR LANDER',v.x,v.y-96);}
  if(e.target){c.save();c.strokeStyle='#f6b5d6';c.setLineDash([4,6]);c.lineWidth=2;const y=['fly','swim','ship'].includes(movementMode(e))?e.target.y:(e.platformAt(e.target.x)?.y??f)-15;c.beginPath();c.ellipse(e.target.x,y,18+Math.sin(time*5)*3,8,0,0,Math.PI*2);c.stroke();c.restore();}
 }

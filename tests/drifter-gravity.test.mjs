@@ -1,35 +1,46 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {Adventure} from '../public/roland-home/physics.js';
-import {gravityDrift,gravitySurface} from '../public/roland-home/gravity.js';
+import {PLANETS} from '../public/roland-home/data.js';
 
-function scene(){const events=[],e=new Adventure(type=>events.push(type));e.start('moo');e.enemies=[];e.items=[];e.fields=[];e.gates=[];e.vents=[];e.boss=null;e.terrain=[{x:0,w:e.length+300,y:e.floor,baseY:e.floor}];return{e,events};}
+function scene(id='moo'){const events=[],e=new Adventure(type=>events.push({type,time:e.timer}));e.start(id);e.enemies=[];e.items=[];e.fields=[];e.gates=[];e.vents=[];e.boss=null;e.terrain=[{x:0,w:e.length+300,y:e.floor,baseY:e.floor}];return{e,events};}
 function advance(e,seconds,hz=60){for(let i=0;i<seconds*hz;i++)e.update(1/hz);}
+function apices(e,seconds=6){const heights=[];for(let i=0;i<seconds*60;i++){e.update(1/60);heights.push(e.floor-e.hero.y-e.hero.r);}return heights;}
 
-test('A damaged gravity device has a slow smooth idle cycle without floor impacts',()=>{
- const {e,events}=scene();advance(e,4);const heights=[],peaks=[];let previous=e.hero.vy;
- for(let i=0;i<600;i++){e.update(1/60);heights.push(e.floor-e.hero.y-e.hero.r);assert.ok(Math.abs(e.hero.vy-previous)<3,'No sharp landing reversal');if(previous<0&&e.hero.vy>=0)peaks.push(e.timer);previous=e.hero.vy;}
- assert.ok(Math.min(...heights)>10);assert.ok(Math.max(...heights)<60);assert.ok(Math.max(...heights)-Math.min(...heights)>15);
- assert.ok(peaks.length>=3);for(let i=1;i<peaks.length;i++)assert.ok(peaks[i]-peaks[i-1]>2.5&&peaks[i]-peaks[i-1]<3.5);
- assert.equal(events.filter(x=>x==='bounce').length,0);
+test('The default bounce reaches almost the original height with longer full rise-and-land cycles',()=>{
+ const {e,events}=scene();advance(e,3);events.length=0;const heights=apices(e);
+ const original=PLANETS.moo.bounce**2/(2*PLANETS.moo.gravity);
+ assert.ok(Math.max(...heights)>original*.8&&Math.max(...heights)<original*.87);
+ assert.ok(Math.min(...heights)<2,'Each bounce reaches the ground');
+ const contacts=events.filter(x=>x.type==='bounce');assert.ok(contacts.length>=4);
+ for(let i=1;i<contacts.length;i++)assert.ok(contacts[i].time-contacts[i-1].time>1.17&&contacts[i].time-contacts[i-1].time<1.25);
 });
 
-test('Boost lifts from a hover and release smoothly returns to the normal band',()=>{
- const {e}=scene();advance(e,4);const rest=e.hero.y;e.keys.boost=true;advance(e,2);assert.ok(e.hero.y<rest-110);e.keys.boost=false;advance(e,4);assert.ok(e.floor-e.hero.y-e.hero.r>10);assert.ok(e.floor-e.hero.y-e.hero.r<60);
- const ordinary=[];for(let i=0;i<180;i++){e.update(1/60);ordinary.push(e.hero.y);}e.potion('bouncy');const spring=[];advance(e,2);for(let i=0;i<180;i++){e.update(1/60);spring.push(e.hero.y);}assert.ok(Math.max(...spring)-Math.min(...spring)>(Math.max(...ordinary)-Math.min(...ordinary))*1.3);
+test('Boost and spring potions strengthen the next launch instead of creating a hover',()=>{
+ const {e}=scene();advance(e,3);const normal=Math.max(...apices(e));e.keys.boost=true;advance(e,2);const boosted=apices(e);assert.ok(Math.max(...boosted)>normal*1.3);assert.ok(Math.min(...boosted)<3);
+ e.keys.boost=false;e.potion('bouncy');advance(e,2);const spring=apices(e);assert.ok(Math.max(...spring)>normal*1.8);assert.ok(Math.min(...spring)<4);
 });
 
-test('Only short gaps are supported, and a platform cannot pull Drifter through its underside',()=>{
- const {e}=scene(),y=e.floor;e.terrain=[{x:0,w:200,y},{x:253,w:200,y}];assert.equal(gravitySurface(e.terrain,225).y,y);
- e.terrain[1].x=320;assert.equal(gravitySurface(e.terrain,260),null);e.hero.x=260;e.hero.y=y-60;e.hero.vy=0;advance(e,.4);assert.equal(e.gravitySupport,false);assert.ok(e.hero.y>y-20);
- e.hero.x=100;e.hero.y=y+80;e.hero.vy=10;assert.equal(gravityDrift(e,1/60),false);assert.equal(e.hero.vy,10);
+test('The device cannot lift through a platform underside or hover over a wide void',()=>{
+ const {e}=scene();e.terrain=[{x:0,w:200,y:e.floor},{x:420,w:200,y:e.floor}];e.hero.x=300;e.hero.y=e.floor-60;e.hero.vy=0;advance(e,.5);assert.ok(e.hero.y>e.floor);
+ e.hero.x=100;e.hero.y=e.floor+20;e.hero.vy=10;advance(e,.1);assert.ok(e.hero.vy>10);assert.ok(e.hero.y>e.floor+20);
 });
 
-test('Unboosted drifting crosses ordinary rises and seams without falling',()=>{
- const {e,events}=scene();e.terrain=[{x:0,w:450,y:e.floor},{x:495,w:300,y:e.floor-70},{x:848,w:300,y:e.floor-30},{x:1183,w:600,y:e.floor}];
- e.setTarget(1600,e.floor-60);advance(e,8);assert.ok(Math.abs(e.hero.x-1600)<5);assert.equal(e.target,null);assert.equal(events.includes('hurt'),false);assert.equal(e.hero.hp,e.hero.maxHp);
+test('A repair stops automatic bouncing, allows a deliberate jump and expires after five playing seconds',()=>{
+ const {e,events}=scene();e.hero.y=e.floor-e.hero.r;e.hero.vy=0;e.potion('repair');advance(e,1);assert.equal(e.mode(),'walk');assert.equal(e.hero.y,e.floor-e.hero.r);assert.equal(e.hero.vy,0);
+ e.keys.boost=true;advance(e,.2);assert.ok(e.hero.y<e.floor-e.hero.r-40);e.keys.boost=false;
+ const remaining=e.effects.repair;e.state='paused';advance(e,10);assert.equal(e.effects.repair,remaining);e.state='playing';advance(e,remaining+.2);assert.equal(e.effects.repair,0);assert.equal(e.mode(),'bounce');advance(e,1.5);assert.ok(events.some(x=>x.type==='bounce'&&x.time>5));
+ e.potion('repair');advance(e,2);e.potion('repair');assert.equal(e.effects.repair,5);
 });
 
-test('Idle gravity motion is consistent across different display refresh rates',()=>{
- const states=[30,60,120].map(hz=>{const {e}=scene();advance(e,6,hz);return e.hero;});for(const h of states.slice(1)){assert.ok(Math.abs(h.y-states[0].y)<.5);assert.ok(Math.abs(h.vy-states[0].vy)<.5);}
+test('Repairs are collectible and ocean, gravity worlds, flight and vehicles retain their movement',()=>{
+ const a=new Adventure();a.start('moo');const item=a.items.find(i=>i.kind==='repair');assert.ok(item);a.hero.x=item.x;a.hero.y=item.y;a.update(1/180);assert.ok(item.got);assert.equal(a.mode(),'walk');assert.equal(a.effects.repair,5);
+ for(const id of ['city','scrap']){const {e}=scene(id);advance(e,3);assert.equal(e.mode(),'walk');assert.equal(e.hero.vy,0);assert.equal(e.hero.y,e.floor-e.hero.r);}
+ for(const [id,expected]of [['ocean','swim'],['barnacle','swim'],['aerie','fly']]){const {e}=scene(id);e.potion('repair');assert.equal(e.mode(),expected);if(expected==='swim'){e.activeField=true;assert.equal(e.mode(),'swim');}}
+ const {e}=scene('driftport');e.vehicle.mounted=true;e.potion('repair');assert.equal(e.mode(),'ship');
+});
+
+test('A stronger bounce can reach raised floating pickups, and frame rates retain the same cycle',()=>{
+ const {e}=scene();e.terrain.push({x:300,w:200,y:e.floor-105,floating:true});e.hero.x=350;e.keys.boost=true;e.items=[{kind:'shard',id:'shard-0',x:350,y:e.floor-170,got:false}];advance(e,3);assert.ok(e.items[0].got);
+ const states=[30,60,120].map(hz=>{const {e}=scene();advance(e,6,hz);return e;});for(const e of states.slice(1)){assert.equal(e.bounces,states[0].bounces);assert.ok(Math.abs(e.hero.y-states[0].hero.y)<4);assert.ok(Math.abs(e.gravityPeriod-states[0].gravityPeriod)<.01);}
 });

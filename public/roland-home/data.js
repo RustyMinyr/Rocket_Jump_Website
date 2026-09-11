@@ -62,6 +62,8 @@ Object.assign(PLANETS,{
 });
 for(const id of ['hollow','echo','mantle','aerie','zephyr','storm','selene','relay','driftport','wreck','nebula','ring'])PLANETS[id].art='drifter-'+id;for(const [id,art]of Object.entries({hollow:'hollow',sky:'aerie',lunar:'selene',beyond:'ring'}))SYSTEMS.find(s=>s.id===id).art='drifter-'+art;
 for(const s of SYSTEMS)delete s.level;
+// These settled worlds retain working gravity across the whole surface.
+for(const id of ['city','scrap'])PLANETS[id].stableGravity=true;
 for(const [id,p]of Object.entries(PLANETS)){if(!p.fatal)p.length=(p.length||3250)*5;if(p.biome==='cave')p.cavern=true;if(p.cavern)p.background='drifter-cave';if(p.flight)p.background='drifter-sky';if(p.biome==='moon')p.background='drifter-lunar';if(id==='moon')p.vehicle='rover';}
 export const STAGE_NAMES={
  cave:['The descent','Lantern galleries','The deep archive','The sleeping machine','Daylight, maybe'],

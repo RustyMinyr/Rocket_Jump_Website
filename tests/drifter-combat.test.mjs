@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {Adventure} from '../public/roland-home/physics.js';
 import {combatStep,focusThreat,muzzle} from '../public/roland-home/combat.js';
-import {drawSuit} from '../public/roland-home/character.js';
+import {drawSuit,drawVehicle} from '../public/roland-home/character.js';
 
 const foe=(x,y,id=100)=>({id,x,y,baseX:x,baseY:y,r:25,hp:10000,maxHp:10000,dead:false,kind:'pirate',phase:0,cooldown:10,hitTime:0});
 function fixture(width=680){const events=[],e=new Adventure((type,data)=>events.push({type,...data}));e.resize(width,900);e.start('moo');e.hero.x=280;e.hero.y=e.floor-28;e.enemies=[];e.boss=null;return{e,events};}
@@ -49,4 +49,12 @@ test('A short landscape phone retains space for companion flight, aiming and aut
  const {e,events}=fixture();e.resize(680,382);e.hero.y=e.floor-28;e.enemies=[foe(540,e.hero.y)];
  e.setTarget(450,20);assert.ok(e.target.y<e.floor-80);tick(e,1.2);
  assert.ok(events.some(x=>x.type==='fire'));assert.ok(e.companion.y<e.floor-30);
+});
+
+test('Flyable ships and landers face along travel, including after parking',()=>{
+ const scales=[],ctx={save(){},restore(){},translate(){},scale(x,y){scales.push([x,y]);},drawImage(){}};
+ const images={'drifter-ship':{},'drifter-rover':{}};
+ for(const kind of ['ship','rover']){drawVehicle(ctx,images,kind,100,200,1);drawVehicle(ctx,images,kind,100,200,-1);}
+ assert.deepEqual(scales,[[-1,1],[1,1],[-1,1],[1,1]]);
+ const e=new Adventure();e.start('driftport');e.hero.x=e.vehicle.x;e.interact();e.keys.left=true;e.update(.05);assert.equal(e.facing,-1);e.interact();assert.equal(e.vehicle.facing,-1);
 });

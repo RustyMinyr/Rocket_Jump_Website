@@ -11,7 +11,7 @@ export function pilot(a,max=28000){
   let x=item?.x??a.length,y=item?.y??a.floor-130;
   if(b?.active&&!b.dead){x=b.phase==='warning'?b.targetX+(b.targetX>b.x-250?-220:220):b.x-240;x=Math.max(a.length-870,Math.min(a.length-200,x));y=a.floor-90;}
   a.setTarget(x,y);a.keys.boost=!['ship','fly','swim'].includes(a.mode())&&Math.abs(x-a.hero.x)>130;
-  if(a.mode()==='bounce'&&item&&Math.abs(x-a.hero.x)<150&&item.y<a.hero.y-38)a.keys.boost=true;
+  if(['bounce','walk'].includes(a.mode())&&!a.activeField&&item&&Math.abs(x-a.hero.x)<150&&item.y<a.hero.y-38)a.keys.boost=true;
   if(a.mode()==='walk'&&!a.activeField&&Math.abs(x-a.hero.x)>25)a.keys.boost=true;
   a.update(1/60);
   if(i%600===599){if(Math.abs(a.hero.x-lastX)<60)wasStuck++;else wasStuck=0;lastX=a.hero.x;if(wasStuck>=3)break;}
