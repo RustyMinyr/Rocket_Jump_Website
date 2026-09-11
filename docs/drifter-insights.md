@@ -4,9 +4,9 @@ The game has an opt-in public explorer leaderboard under the entry screen, star 
 
 ## Owner dashboard
 
-`/admin` is a new protected owner dashboard. The existing `/client-portal` remains a sample preview. Set `DRIFTER_ADMIN_EMAIL` to the confirmed owner email and `DRIFTER_ADMIN_BOOTSTRAP_TOKEN` to a cryptographically random private token in the production environment. Sign into the matching game account, enter the token once, then remove the bootstrap token from the environment. A persistent database role protects the dashboard. Registration alone never grants admin access. Never put the token in source, a URL or public client configuration.
+`/admin` is a new protected owner dashboard. The existing `/client-portal` remains a sample preview. Set `DRIFTER_ADMIN_EMAIL` to the confirmed owner email and `DRIFTER_ADMIN_BOOTSTRAP_TOKEN` to a cryptographically random private token in the production environment. Provision the matching account and claim the role through the private owner setup workflow, then remove the bootstrap token from the environment. The admin page only supports sign-in; there is no admin registration or activation form. A persistent database role protects the dashboard. Registration alone never grants admin access. Never put the token in source, a URL or public client configuration.
 
-Owner activation is pending confirmation of the owner's email. Production remains closed to all accounts until configured and claimed.
+Owner activation completed on 11 September 2026. Live owner sign-in, dashboard access and logout were verified. The spent bootstrap token was removed from Vercel and temporary local storage.
 
 The dashboard reports playing now, unique browsers in the last 24 hours / 7 days / 30 days, most-played stages, planet starts/completions/deaths/exits, daily trends, active minutes, optional ratings and reported runtime errors. Insight cards distinguish observed behaviour from explicit player opinions, and require minimum samples for friction and satisfaction conclusions.
 
