@@ -10,6 +10,8 @@ function getService() {
   service ??= createGameService({
     databasePath: process.env.ROLAND_DATABASE_PATH,
     databaseUrl: process.env.DATABASE_URL,
+    adminEmail: process.env.DRIFTER_ADMIN_EMAIL,
+    bootstrapToken: process.env.DRIFTER_ADMIN_BOOTSTRAP_TOKEN,
     origin: process.env.ROLAND_GAME_ORIGIN || 'https://www.rocketjump.co.za',
     origins: ['https://rocketjump.co.za', 'https://rocket-jump-nu.vercel.app',
       ...(process.env.VERCEL_URL ? ['https://' + process.env.VERCEL_URL] : [])],
@@ -35,3 +37,4 @@ async function handle(request: Request) {
 export const GET = handle;
 export const POST = handle;
 export const PUT = handle;
+export const DELETE = handle;

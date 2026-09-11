@@ -7,7 +7,7 @@ import { ScrollMotion } from "./ScrollMotion";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isPortal = pathname === "/client-portal";
+  const isPortal = pathname === "/client-portal" || pathname === "/admin" || pathname.startsWith('/admin/');
 
   if (isPortal) return <main id="main">{children}</main>;
 

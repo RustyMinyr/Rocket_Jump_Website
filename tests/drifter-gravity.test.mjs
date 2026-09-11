@@ -44,3 +44,5 @@ test('A stronger bounce can reach raised floating pickups, and frame rates retai
  const {e}=scene();e.terrain.push({x:300,w:200,y:e.floor-105,floating:true});e.hero.x=350;e.keys.boost=true;e.items=[{kind:'shard',id:'shard-0',x:350,y:e.floor-170,got:false}];advance(e,3);assert.ok(e.items[0].got);
  const states=[30,60,120].map(hz=>{const {e}=scene();advance(e,6,hz);return e;});for(const e of states.slice(1)){assert.equal(e.bounces,states[0].bounces);assert.ok(Math.abs(e.hero.y-states[0].hero.y)<4);assert.ok(Math.abs(e.gravityPeriod-states[0].gravityPeriod)<.01);}
 });
+
+test('A fall recovers above the highest solid checkpoint surface with a full bounce',()=>{const {e}=scene('ice');e.checkpoint=500;e.terrain=[{x:400,w:300,y:e.floor},{x:440,w:140,y:e.floor-60},{x:460,w:100,y:e.floor-165,floating:true}];e.hero.x=900;e.hero.y=e.floor+160;e.hero.vy=50;e.update(1/180);assert.equal(e.hero.x,500);assert.equal(e.hero.y,e.floor-60-e.hero.r);assert.ok(e.hero.vy<-300);});

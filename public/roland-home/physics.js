@@ -57,7 +57,7 @@ export class Adventure {
  this.shots=this.shots.filter(s=>s.life>0);this.enemyShots=this.enemyShots.filter(s=>s.life>0&&s.y<this.floor+100);
  if(this.boss?.active&&!this.boss.dead&&Math.hypot(h.x-this.boss.x,h.y-this.boss.y)<h.r+this.boss.r){if(h.vy>60&&oldY<this.boss.y-30){this.hurtBoss(this.stats.attack*1.8);h.vy=-bounceSpeed(this);}else this.hit(24);}
  this.enemies=this.enemies.filter(e=>!e.dead);
- if(h.y>this.floor+150){this.hit(30,'fall');if(this.state==='playing'){h.x=Math.max(80,this.checkpoint);const platform=this.platformAt(h.x);if(!platform)h.x=80;h.y=(this.platformAt(h.x)?.y??this.floor)-90;h.vx=0;h.vy=-bounceSpeed(this)*.7;this.shield=1.8;}}
+ if(h.y>this.floor+150){this.hit(30,'fall');if(this.state==='playing'){h.x=Math.max(80,this.checkpoint);const platform=this.platformAt(h.x);if(!platform)h.x=80;const safe=this.terrain.filter(t=>!t.floating&&h.x>=t.x&&h.x<=t.x+t.w).sort((a,b)=>a.y-b.y)[0]||this.platformAt(h.x);h.y=(safe?.y??this.floor)-h.r;h.vx=0;h.vy=-bounceSpeed(this,safe);this.shield=1.8;}}
  if(this.boss?.active&&!this.boss.dead){const center=(h.x+this.boss.x)/2;this.camera=clamp(Math.max(center-this.width/2,this.boss.x+125-this.width),0,this.length-this.width+160);}else this.camera=clamp(h.x-this.width*.35,0,this.length-this.width+160);
  if(h.x>=this.length-40&&(!this.boss||this.boss.dead)){this.state='complete';this.keys={left:false,right:false,boost:false,fire:false};this.emit('complete',{part:p.part,found:this.hasPart});}
  }
