@@ -51,3 +51,7 @@ Browser automation covers selected routes and inputs, not every possible action,
 | The Unfinished Ring | Pass | Pass | 5 / 5 |
 | angler | Pass | Pass | Intentional trap |
 | asteroid-system | Pass | Pass | Intentional trap |
+
+## Live verification
+
+Production release `1e20c686cba75903679bfbe7a45ec875b42992cf` passed read-only browser checks on www.rocketjump.co.za: entry, public leaderboard API, locked admin dashboard, footer links and phone layout. Live physics, gameplay, analytics client and community stylesheet bytes matched the committed release. No synthetic gameplay or accounts were sent to production. The authenticated owner data flow was verified locally; production owner activation remains pending.
