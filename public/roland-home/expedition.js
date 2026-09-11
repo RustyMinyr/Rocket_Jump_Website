@@ -1,10 +1,11 @@
 import {stageNames,savedStage} from './data.js';
+import {gravitySurface} from './gravity.js';
 
 export function buildExpedition(e){
  const p=e.planet,y=e.floor,span=e.length/5;
  e.stage=0;e.stageLength=span;e.stages=stageNames(p);e.fields=[];e.gates=[];e.vents=[];e.caches=[];e.signals=[];e.vehicle=null;e.target=null;e.autoFire=true;e.grounded=false;e.activeField=false;e.seenStages=new Set([0]);e.dashCooldown=0;
  const platform=(x,w,top=y,extra={})=>e.terrain.push({x,w,y:top,baseY:top,moving:false,...extra});
- const pickup=(kind,x,id,extra={})=>{const surface=e.terrain.filter(t=>x>=t.x&&x<=t.x+t.w).sort((a,b)=>a.y-b.y)[0];e.items.push({id,kind,x,y:(surface?.baseY??y)-65,got:false,...extra});};
+ const pickup=(kind,x,id,extra={})=>{const surface=e.terrain.filter(t=>x>=t.x&&x<=t.x+t.w).sort((a,b)=>a.y-b.y)[0];e.items.push({id,kind,x,y:(surface?.baseY??gravitySurface(e.terrain,x)?.y??y)-65,got:false,...extra});};
  for(let stage=0;stage<5;stage++){
   const start=stage*span,stride=(span-650)/11;
   platform(start-40,540);
