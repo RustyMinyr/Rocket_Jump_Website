@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "dev:game": "node scripts/serve-roland-game.mjs",
-    "test:game": "node --test --test-isolation=none tests/drifter-expedition.test.mjs tests/roland-accounts.test.mjs"
+    "test:game": "node --test --test-isolation=none tests/drifter-expedition.test.mjs tests/drifter-combat.test.mjs tests/roland-accounts.test.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

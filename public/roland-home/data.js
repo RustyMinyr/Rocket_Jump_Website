@@ -90,7 +90,7 @@ const UNIQUE_STAGES={
 export function stageNames(p){return UNIQUE_STAGES[p.seed]||STAGE_NAMES[p.biome]||STAGE_NAMES.default;}
 export function savedStage(save,id){return Math.max(0,...save.claims.filter(c=>c.startsWith('stage:'+id+':')).map(c=>Number(c.split(':')[2])));}
 export const GEAR={
- starter:{name:'Standard Issue',slot:'suit',source:null,level:1,art:'suit-starter',description:'One slightly dented suit. One extremely determined Drifter.',effect:'Your trusty helmet and a pulse blaster.'},
+ starter:{name:'Standard Issue',slot:'suit',source:null,level:1,art:'suit-starter',description:'One slightly dented suit. One extremely determined Drifter.',effect:'Your first suit. Dot handles the blaster.'},
  dive:{name:'Deep-Sea Suit',slot:'suit',source:'ocean',level:1,art:'suit-dive',description:'Recovered from the drowned post office of Atlant-ish.',effect:'+15 health. Swim faster. Bubble currents are gentler.'},
  crystal:{name:'Crystal Helm',slot:'suit',source:'prism',level:2,art:'suit-crystal',description:'A one-of-a-kind helm hidden on Prism Break.',effect:'+25 health. 25% less projectile damage. Prismatic blaster.'},
  pirate:{name:'Captain’s Regalia',slot:'suit',source:'captain',level:3,art:'suit-pirate',description:'Beat Captain Barnacle to claim his very impractical uniform.',effect:'+15 health. Defeating an enemy restores 8 health.'},
