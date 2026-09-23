@@ -10,7 +10,7 @@ function fakePool() {
  const run=async(source,text,values)=>{
   calls.push({source,text,values});
   if(rejectText&&text.includes(rejectText))throw Error('Simulated database failure');
-  return {rows:text.includes('RETURNING count')?[{count:1}]:text.startsWith('SELECT')?[{id:'player-1'}]:[]};
+  return {rows:text.includes('RETURNING count')?[{count:1}]:text.includes('AS players')?[{players:'3'}]:text.startsWith('SELECT')?[{id:'player-1'}]:[]};
  };
  return {
   calls,
@@ -54,6 +54,20 @@ test('Coolify PostgreSQL mode uses parameterized SQL and a single client for eac
   assert.ok(transaction.every(call=>call.source==='client-2'));
   assert.equal(await db.consumeLimit('ip:example',8),true);
   assert.equal(pool.calls.at(-1).values.length,5);
+  assert.match(pool.calls.at(-1).text,/drifter_limits\.expires/);
+  assert.doesNotMatch(pool.calls.at(-1).text,/\blimits\.expires/);
+
+  const stages=await db.one("SELECT COUNT(DISTINCT v.visitor) AS players FROM drifter_events e JOIN drifter_visits v ON v.id=e.visit WHERE e.at>=? AND kind='stage_enter'",[42]);
+  assert.equal(stages.players,'3');
+  assert.match(pool.calls.at(-1).text,/AS players FROM drifter_events/);
+  assert.match(pool.calls.at(-1).text,/e\.at>=\$1 AND kind='stage_enter'/);
+
+  const trend=await db.one('SELECT CAST(bucket / 86400000 AS BIGINT) AS day,COUNT(DISTINCT visitor) AS players FROM drifter_activity WHERE last_seen>=?',[42]);
+  assert.equal(trend.players,'3');
+  assert.match(pool.calls.at(-1).text,/AS players FROM drifter_activity/);
+
+  await db.query("SELECT * FROM sessions WHERE token=? AND note='players? sessions'",['secret-token']);
+  assert.equal(pool.calls.at(-1).text,"SELECT * FROM drifter_sessions WHERE token=$1 AND note='players? sessions'");
  }finally{await db.close();}
  assert.equal(pool.calls.at(-1).text,'END');
 });
