@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 
-const source = ts.transpileModule(readFileSync(new URL('../app/api/website-giveaway/route.ts', import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText;
+const source = ts.transpileModule(readFileSync(new URL('../app/api/website-giveaway/route.ts', import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText.replace('../../../lib/roland-proxy-origin.mjs', new URL('../lib/roland-proxy-origin.mjs', import.meta.url).href);
 const { POST } = await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
 const request = (data) => new Request('http://localhost/api/website-giveaway', { method: 'POST', headers: { 'Content-Type': 'application/json', origin: 'http://localhost' }, body: JSON.stringify(data) });
 test('giveaway validates entries and handles provider success and failure without sending email', async () => {
