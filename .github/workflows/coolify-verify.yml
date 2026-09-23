@@ -1,0 +1,29 @@
+name: Verify RocketJump self-hosted release
+
+on:
+  push:
+    branches:
+      - codex/rocketjump-coolify-migration
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npx eslint app components lib --quiet
+      - name: Test the PostgreSQL adapter, proxy addresses and site forms
+        run: node --test --test-isolation=none tests/drifter-postgres-adapter.test.mjs tests/client-address.test.mjs tests/roland-accounts.test.mjs tests/drifter-insights.test.mjs tests/roland-giveaway.test.mjs
+      - run: npm run test:game
+      - name: Build production container
+        run: docker build --tag rocketjump-website:${{ github.sha }} .

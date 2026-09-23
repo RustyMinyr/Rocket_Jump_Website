@@ -4,6 +4,7 @@ export const runtime = "nodejs";
 const respond = (ok: boolean, status: number, message?: string) => Response.json({ ok, message }, { status, headers: { "Cache-Control": "no-store" } });
 
 export async function POST(request: Request) {
+  if (process.env.MIGRATION_READ_ONLY === "1") return respond(false, 503, "Entries are briefly paused while RocketJump moves. Please try again shortly.");
   // Entries close at the end of 29 September in South Africa (UTC+02:00).
   if (Date.now() >= Date.parse("2026-09-30T00:00:00+02:00")) return respond(false, 410, "Entries closed on 29 September 2026. The winner is announced on 30 September 2026.");
   if (!request.headers.get("content-type")?.includes("application/json")) return respond(false, 415, "Invalid request.");
