@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import "@fontsource/poppins/latin-400.css";
+import "@fontsource/poppins/latin-500.css";
+import "@fontsource/poppins/latin-600.css";
+import "@fontsource/poppins/latin-700.css";
+import "@fontsource/poppins/latin-800.css";
 import { SiteChrome } from "@/components/SiteChrome";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
-
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-poppins" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -53,5 +55,5 @@ const structuredData = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className={poppins.variable}><a className="skip-link" href="#main">Skip to content</a><SiteChrome>{children}</SiteChrome><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}/></body></html>;
+  return <html lang="en"><body><a className="skip-link" href="#main">Skip to content</a><SiteChrome>{children}</SiteChrome><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}/></body></html>;
 }

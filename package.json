@@ -18,8 +18,10 @@
     "test:game": "node --test --test-isolation=none tests/drifter-expedition.test.mjs tests/drifter-combat.test.mjs tests/drifter-gravity.test.mjs tests/roland-accounts.test.mjs tests/drifter-insights.test.mjs tests/drifter-insights-client.test.mjs"
   },
   "dependencies": {
+    "@fontsource/poppins": "5.3.0",
     "@neondatabase/serverless": "^1.1.0",
     "next": "16.2.6",
+    "pg": "^8.23.0",
     "react": "19.2.6",
     "react-dom": "19.2.6"
   },
@@ -27,6 +29,7 @@
     "@cloudflare/vite-plugin": "1.37.1",
     "@tailwindcss/postcss": "4.2.1",
     "@types/node": "22.19.19",
+    "@types/pg": "8.23.1",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",

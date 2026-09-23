@@ -56,6 +56,7 @@ function subjectValue(value: string) {
 }
 
 export async function POST(request: Request) {
+  if (process.env.MIGRATION_READ_ONLY === "1") return json({ ok: false, message: "Enquiries are briefly paused while RocketJump moves. Please try again shortly." }, 503);
   const contentLength = Number(request.headers.get("content-length"));
   if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) return json({ ok: false, message: "Invalid request." }, 413);
 
