@@ -1,6 +1,6 @@
 # RocketJump self-hosted deployment
 
-The site builds from this GitHub repository with the included Dockerfile. GitHub Actions checks the application and image before deployment to Coolify.
+The site builds from this GitHub repository with the included Dockerfile. GitHub Actions checks the application and image on pull requests and pushes to `main`. After the checks pass, the operator deploys the reviewed `main` commit from GitHub in Coolify and confirms the running commit and health check.
 
 The game and account features use PostgreSQL. Published images and other site assets are stored in the repository. Contact and giveaway forms use Resend. The application inventory found no upload endpoint, separate file store, or scheduled application job.
 

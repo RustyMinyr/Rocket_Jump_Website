@@ -3,6 +3,7 @@ name: Verify RocketJump self-hosted release
 on:
   push:
     branches:
+      - main
       - codex/rocketjump-coolify-migration
   pull_request:
   workflow_dispatch:
